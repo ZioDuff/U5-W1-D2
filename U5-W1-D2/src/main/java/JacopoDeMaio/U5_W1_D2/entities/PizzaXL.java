@@ -1,6 +1,8 @@
 package JacopoDeMaio.U5_W1_D2.entities;
 
-import JacopoDemaio.U5_W1_D1.enums.Size;
+
+
+import JacopoDeMaio.U5_W1_D2.enums.Size;
 
 import java.util.List;
 

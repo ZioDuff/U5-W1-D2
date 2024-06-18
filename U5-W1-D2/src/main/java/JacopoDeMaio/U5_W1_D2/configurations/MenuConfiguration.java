@@ -1,14 +1,18 @@
 package JacopoDeMaio.U5_W1_D2.configurations;
 
 import JacopoDeMaio.U5_W1_D2.entities.*;
+import JacopoDeMaio.U5_W1_D2.enums.Availability;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.PropertySource;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Configuration // <-- annotazione necessaria per stabilire il nostro "scatolone"
+@Configuration// <-- annotazione necessaria per stabilire il nostro "scatolone"
+@PropertySource("application.properties")
 public class MenuConfiguration {
 
 //    BEANS  <---- da qui faremo i nostri beans tramite l'apposita annotazione
@@ -67,7 +71,7 @@ public class MenuConfiguration {
 //    PIZZA
 
 //    qua facciamo il bean della classe pizza e ne creiamo uno per ogni pizza che vogliamo poi aggiungere, la nostra classe Pizza si aspetta una lista di toppings
-    @Bean
+    @Bean(name = "margherita")
     public Pizza margheritaPizza(){
 //        quindi andiamo a creare una nuova lista e aggiungeremo un topping alla volta, questo è possibile grazie ai bean creati prima
         List<Toppings> margheritaToppings = new ArrayList<>();
@@ -157,5 +161,15 @@ public class MenuConfiguration {
         List<Drink> drinkList = new ArrayList<>();
 
         return new Menu(toppingsList,pizzaList,drinkList);
+    }
+
+//    TAVOLI
+
+//    qui creiamo il bean del tavolo e gli diamo un nome specifico cosi da evitare conflitti
+
+    @Bean(name = "Tavolo1")
+//    gli passiamo come parametro un valore unico che abbiamo nel "application.properties" e lo facciamo grazie all'apposita annotazione
+    public Tavolo getTable(@Value("${seat.cost}") double seatCost){
+        return new Tavolo(1,6, Availability.LIBERO,seatCost);
     }
 }
